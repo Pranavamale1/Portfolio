@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --neon-cyan:#00f5ff;
+  --neon-green:#39ff14;
+  --neon-purple:#bf00ff;
+  --neon-pink:#ff006e;
+  --dark-bg:#030712;
+  --dark-card:#0a0f1e;
+  --dark-card2:#0d1526;
+  --grid-color:rgba(0,245,255,0.05);
+  --text-main:#e0f7ff;
+  --text-muted:#7ab8c8;
+}
+body{
+  background:var(--dark-bg);
+  color:var(--text-main);
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* Custom cursor */
+#cursor{position:fixed;width:12px;height:12px;background:var(--neon-cyan);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--neon-cyan);border-radius:50%;pointer-events:none;z-index:9998;transition:all 0.15s;opacity:0.5}
+
+/* Grid background */
+.grid-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background-image:
+    linear-gradient(var(--grid-color) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
+  background-size:50px 50px;
+  pointer-events:none;z-index:0;
+}
+.scanline{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+  pointer-events:none;z-index:1;
+}
+
+/* Floating particles */
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;width:2px;height:2px;background:var(--neon-cyan);border-radius:50%;animation:float linear infinite;opacity:0}
+@keyframes float{
+  0%{transform:translateY(100vh) translateX(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-100px) translateX(100px);opacity:0}
+}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(3,7,18,0.8);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(0,245,255,0.15);
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--neon-cyan);
+  text-shadow:0 0 20px var(--neon-cyan);
+  letter-spacing:3px;
+}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{
+  color:var(--text-muted);
+  text-decoration:none;
+  font-size:0.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:all 0.3s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--neon-cyan);transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan)}
+.nav-links a:hover::after{width:100%}
+
+/* Sections */
+section{position:relative;z-index:2;padding:5rem 2rem;max-width:1100px;margin:0 auto}
+
+/* Hero */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding-top:6rem;max-width:100%;padding-left:5%;padding-right:5%;
+}
+.hero-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.8rem;color:var(--neon-green);
+  letter-spacing:3px;margin-bottom:1rem;
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(2.5rem,6vw,5rem);
+  font-weight:900;
+  line-height:1.1;
+  background:linear-gradient(135deg,#fff 0%,var(--neon-cyan) 50%,var(--neon-purple) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shimmer 4s ease infinite;
+  background-size:200% 200%;
+}
+@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.hero-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(1rem,2.5vw,1.5rem);
+  color:var(--text-muted);
+  margin-top:0.5rem;
+  letter-spacing:2px;
+}
+.hero-title span{color:var(--neon-cyan)}
+.hero-desc{
+  max-width:600px;margin-top:1.5rem;
+  font-size:1rem;line-height:1.8;color:var(--text-muted);
+  font-weight:300;
+}
+.hero-btns{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap}
+.btn-primary{
+  padding:0.8rem 2rem;
+  background:transparent;
+  border:1px solid var(--neon-cyan);
+  color:var(--neon-cyan);
+  font-family:'Orbitron',sans-serif;
+  font-size:0.75rem;letter-spacing:2px;
+  cursor:pointer;text-decoration:none;
+  transition:all 0.3s;position:relative;overflow:hidden;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.btn-primary::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(0,245,255,0.1),transparent);
+  transition:left 0.5s;
+}
+.btn-primary:hover{background:rgba(0,245,255,0.1);box-shadow:0 0 20px rgba(0,245,255,0.3);color:#fff}
+.btn-primary:hover::before{left:100%}
+.btn-secondary{
+  padding:0.8rem 2rem;
+  background:transparent;
+  border:1px solid var(--neon-purple);
+  color:var(--neon-purple);
+  font-family:'Orbitron',sans-serif;
+  font-size:0.75rem;letter-spacing:2px;
+  cursor:pointer;text-decoration:none;
+  transition:all 0.3s;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.btn-secondary:hover{background:rgba(191,0,255,0.1);box-shadow:0 0 20px rgba(191,0,255,0.3);color:#fff}
+
+/* Stats bar */
+.stats-bar{
+  display:flex;gap:3rem;margin-top:3rem;flex-wrap:wrap;
+  padding-top:2rem;border-top:1px solid rgba(0,245,255,0.1);
+}
+.stat{text-align:left}
+.stat-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:2rem;font-weight:700;
+  color:var(--neon-cyan);
+  text-shadow:0 0 20px var(--neon-cyan);
+}
+.stat-label{font-size:0.75rem;color:var(--text-muted);letter-spacing:2px;margin-top:0.2rem}
+
+/* Section title */
+.section-header{margin-bottom:3rem;position:relative}
+.section-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;color:var(--neon-green);
+  letter-spacing:3px;margin-bottom:0.5rem;
+}
+.section-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.5rem,3vw,2.5rem);
+  font-weight:700;
+  color:var(--text-main);
+}
+.section-title span{
+  color:transparent;
+  -webkit-text-stroke:1px var(--neon-cyan);
+}
+.section-line{
+  width:80px;height:1px;
+  background:linear-gradient(90deg,var(--neon-cyan),transparent);
+  margin-top:1rem;
+}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.skill-card{
+  background:var(--dark-card);
+  border:1px solid rgba(0,245,255,0.1);
+  padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:all 0.3s;
+}
+.skill-card::before{
+  content:'';position:absolute;top:0;left:0;width:3px;height:0;
+  background:linear-gradient(180deg,var(--neon-cyan),var(--neon-purple));
+  transition:height 0.4s;
+}
+.skill-card:hover::before{height:100%}
+.skill-card:hover{border-color:rgba(0,245,255,0.3);transform:translateY(-4px);box-shadow:0 10px 40px rgba(0,245,255,0.1)}
+.skill-card-title{
+  font-family:'Orbitron',sans-serif;font-size:0.8rem;
+  color:var(--neon-cyan);letter-spacing:2px;margin-bottom:1rem;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.skill-tag{
+  padding:0.3rem 0.7rem;
+  background:rgba(0,245,255,0.05);
+  border:1px solid rgba(0,245,255,0.15);
+  font-size:0.8rem;color:var(--text-muted);
+  letter-spacing:1px;transition:all 0.2s;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.skill-tag:hover{background:rgba(0,245,255,0.15);color:var(--neon-cyan);border-color:var(--neon-cyan)}
+
+/* Experience */
+.exp-card{
+  background:var(--dark-card);
+  border:1px solid rgba(0,245,255,0.1);
+  padding:2rem;margin-bottom:1.5rem;
+  position:relative;overflow:hidden;transition:all 0.3s;
+}
+.exp-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-cyan),transparent);
+  animation:scan 3s linear infinite;
+}
+@keyframes scan{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+.exp-card:hover{border-color:rgba(0,245,255,0.3);box-shadow:0 0 30px rgba(0,245,255,0.05)}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+.exp-role{font-family:'Orbitron',sans-serif;font-size:1rem;color:var(--text-main);font-weight:700}
+.exp-company{color:var(--neon-cyan);font-size:0.9rem;margin-top:0.3rem}
+.exp-date{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;color:var(--neon-green);
+  background:rgba(57,255,20,0.05);
+  border:1px solid rgba(57,255,20,0.2);
+  padding:0.3rem 0.8rem;white-space:nowrap;
+}
+.exp-bullets{margin-top:1rem;list-style:none}
+.exp-bullets li{
+  font-size:0.95rem;color:var(--text-muted);
+  padding:0.4rem 0 0.4rem 1.5rem;
+  position:relative;line-height:1.6;
+}
+.exp-bullets li::before{
+  content:'▸';position:absolute;left:0;
+  color:var(--neon-cyan);font-size:0.8rem;top:0.4rem;
+}
+
+/* Projects */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.project-card{
+  background:var(--dark-card);
+  border:1px solid rgba(0,245,255,0.1);
+  padding:2rem;position:relative;overflow:hidden;
+  transition:all 0.4s;cursor:pointer;
+}
+.project-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,245,255,0.03),rgba(191,0,255,0.03));
+  opacity:0;transition:opacity 0.4s;
+}
+.project-card:hover::before{opacity:1}
+.project-card:hover{
+  border-color:var(--neon-cyan);
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(0,245,255,0.15),0 0 0 1px rgba(0,245,255,0.1);
+}
+.project-rank{
+  position:absolute;top:1rem;right:1rem;
+  font-family:'Orbitron',sans-serif;font-size:0.65rem;
+  padding:0.3rem 0.7rem;
+  background:rgba(255,215,0,0.1);
+  border:1px solid rgba(255,215,0,0.3);
+  color:#ffd700;letter-spacing:1px;
+}
+.project-icon{font-size:2.5rem;margin-bottom:1rem}
+.project-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:1rem;font-weight:700;
+  color:var(--text-main);margin-bottom:0.3rem;
+}
+.project-sub{font-size:0.85rem;color:var(--neon-cyan);margin-bottom:1rem;font-style:italic}
+.project-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem}
+.project-stack{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem}
+.stack-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.7rem;
+  padding:0.2rem 0.6rem;
+  background:rgba(191,0,255,0.08);
+  border:1px solid rgba(191,0,255,0.2);
+  color:#d68fff;
+}
+.project-award{
+  margin-top:1rem;padding:0.7rem;
+  background:rgba(255,215,0,0.05);
+  border:1px solid rgba(255,215,0,0.15);
+  font-size:0.8rem;color:#ffd700;
+}
+
+/* Certifications */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.cert-card{
+  background:var(--dark-card);
+  border:1px solid rgba(57,255,20,0.1);
+  padding:1.2rem;transition:all 0.3s;
+  position:relative;overflow:hidden;
+}
+.cert-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-green),transparent);
+  transform:scaleX(0);transition:transform 0.4s;
+}
+.cert-card:hover::before{transform:scaleX(1)}
+.cert-card:hover{border-color:rgba(57,255,20,0.3);box-shadow:0 0 20px rgba(57,255,20,0.08)}
+.cert-issuer{font-size:0.7rem;color:var(--neon-green);letter-spacing:2px;margin-bottom:0.5rem}
+.cert-name{font-size:0.9rem;color:var(--text-main);font-weight:600;line-height:1.4}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.contact-item{
+  background:var(--dark-card);
+  border:1px solid rgba(0,245,255,0.1);
+  padding:1.5rem;text-align:center;
+  transition:all 0.3s;text-decoration:none;display:block;
+}
+.contact-item:hover{
+  border-color:var(--neon-cyan);
+  box-shadow:0 0 30px rgba(0,245,255,0.2);
+  transform:translateY(-4px);
+}
+.contact-icon{font-size:1.8rem;margin-bottom:0.7rem;display:block}
+.contact-label{font-size:0.7rem;color:var(--text-muted);letter-spacing:2px;margin-bottom:0.3rem}
+.contact-value{font-size:0.85rem;color:var(--neon-cyan)}
+
+/* Footer */
+footer{
+  text-align:center;padding:2rem;
+  border-top:1px solid rgba(0,245,255,0.1);
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;color:var(--text-muted);
+  position:relative;z-index:2;
+}
+
+/* Animations */
+.fade-in{opacity:0;transform:translateY(30px);transition:all 0.8s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* Glitch effect */
+.glitch{position:relative;animation:glitch 5s infinite}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;
+  background:var(--dark-bg);width:100%;
+}
+.glitch::before{left:2px;text-shadow:-2px 0 var(--neon-pink);animation:glitch1 3s infinite;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
+.glitch::after{left:-2px;text-shadow:2px 0 var(--neon-cyan);animation:glitch2 3s infinite;clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%)}
+@keyframes glitch1{0%,100%{clip-path:polygon(0 0,100% 0,100% 0,0 0)}50%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}}
+@keyframes glitch2{0%,100%{clip-path:polygon(0 0,100% 0,100% 0,0 0)}50%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%)}}
+
+/* Typing cursor */
+.typing-cursor::after{content:'|';animation:blink 1s infinite;color:var(--neon-cyan)}
+
+/* Corner decorations */
+.corner-tl,.corner-tr,.corner-bl,.corner-br{position:absolute;width:16px;height:16px}
+.corner-tl{top:8px;left:8px;border-top:2px solid var(--neon-cyan);border-left:2px solid var(--neon-cyan)}
+.corner-tr{top:8px;right:8px;border-top:2px solid var(--neon-cyan);border-right:2px solid var(--neon-cyan)}
+.corner-bl{bottom:8px;left:8px;border-bottom:2px solid var(--neon-cyan);border-left:2px solid var(--neon-cyan)}
+.corner-br{bottom:8px;right:8px;border-bottom:2px solid var(--neon-cyan);border-right:2px solid var(--neon-cyan)}
+
+/* Mobile */
+@media(max-width:600px){
+  nav{padding:1rem}
+  .nav-links{gap:1rem}
+  .nav-links a{font-size:0.7rem}
+  section{padding:4rem 1rem}
+  .stats-bar{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+<div class="particles" id="particles"></div>
+
+<nav>
+  <div class="nav-logo">PA_</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Exp</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width:100%;padding-left:5%;padding-right:5%">
+  <div class="hero-tag">// INITIALIZING PORTFOLIO v2.6.0</div>
+  <h1 class="hero-name glitch" data-text="PRANAV AMALE">PRANAV AMALE</h1>
+  <p class="hero-title">
+    <span>Flutter Developer</span> &nbsp;·&nbsp; Java Backend &nbsp;·&nbsp; <span>AI/ML Enthusiast</span>
+  </p>
+  <p class="hero-desc">
+    3rd Year BE-IT @ NBNSTIC Pune · CGPA 9.14 · Super-X 2025 Champion · Building intelligent mobile experiences with Flutter, Firebase & Gemini AI.
+  </p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
+    <a href="#contact" class="btn-secondary">GET IN TOUCH</a>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">9.14</div><div class="stat-label">CGPA Score</div></div>
+    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Live Projects</div></div>
+    <div class="stat"><div class="stat-num">1ST</div><div class="stat-label">Super-X 2025</div></div>
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Connections</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="fade-in" style="max-width:1100px">
+  <div class="section-header">
+    <div class="section-tag">// 01. ABOUT_ME</div>
+    <h2 class="section-title">Who Am <span>I</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center">
+    <div>
+      <p style="font-size:1.05rem;line-height:1.9;color:var(--text-muted);margin-bottom:1rem">
+        I'm a passionate Software developer from Pune, Maharashtra with a knack for building real-world applications that solve actual problems. Currently pursuing BE in Information Technology at NBNSTIC, affiliated to Savitribai Phule Pune University.
+      </p>
+      <p style="font-size:1.05rem;line-height:1.9;color:var(--text-muted)">
+        I won <span style="color:var(--neon-cyan)">1st place at Super-X 2025</span> against 250+ teams and earned ₹15,000 prize for CareNexus. I blend Flutter's beautiful UI with AI capabilities like Gemini and on-device ML to build apps that are both smart and delightful.Currently having Hands on Experience on Web and App development
+
+      </p>
+    </div>
+    <div style="background:var(--dark-card);border:1px solid rgba(0,245,255,0.1);padding:2rem;position:relative">
+      <div class="corner-tl"></div><div class="corner-tr"></div>
+      <div class="corner-bl"></div><div class="corner-br"></div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:var(--neon-green);margin-bottom:1rem">> profile.json</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.82rem;line-height:2;color:var(--text-muted)">
+        <span style="color:var(--neon-purple)">"name"</span>: <span style="color:#ffd700">"Pranav Amale"</span>,<br>
+        <span style="color:var(--neon-purple)">"location"</span>: <span style="color:#ffd700">"Pune, India"</span>,<br>
+        <span style="color:var(--neon-purple)">"university"</span>: <span style="color:#ffd700">"NBNSTIC, SPPU"</span>,<br>
+        <span style="color:var(--neon-purple)">"year"</span>: <span style="color:#ffd700">"3rd Year BE-IT"</span>,<br>
+        <span style="color:var(--neon-purple)">"cgpa"</span>: <span style="color:var(--neon-cyan)">9.14</span>,<br>
+        <span style="color:var(--neon-purple)">"status"</span>: <span style="color:var(--neon-green)">"Open to Internships"</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="fade-in" style="max-width:1100px">
+  <div class="section-header">
+    <div class="section-tag">// 02. TECH_STACK</div>
+    <h2 class="section-title"><span>Skills</span> & Arsenal</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-title">📱 MOBILE and 💻WEB</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Flutter</span><span class="skill-tag">Dart</span>
+        <span class="skill-tag">Firebase Auth</span><span class="skill-tag">Firestore</span>
+        <span class="skill-tag">SQLite</span><span class="skill-tag">Provider</span>
+        <span class="skill-tag">TFLite</span><span class="skill-tag">Android</span><span class="skill-tag">iOS</span>
+        <span class="skill-tag">React.js</span><span class="skill-tag">HTML5/CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">⚙️ BACKEND</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Java</span><span class="skill-tag">Spring Boot</span>
+        <span class="skill-tag">Hibernate</span><span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">Maven</span><span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Firebase</span><span class="skill-tag">Spring MVC</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">🤖 AI / ML</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Gemini AI</span><span class="skill-tag">MobileNetV2</span>
+        <span class="skill-tag">Keras</span><span class="skill-tag">Transfer Learning</span>
+        <span class="skill-tag">TensorFlow Lite</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">🛠️ TOOLS</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Postman</span><span class="skill-tag">Figma</span>
+        <span class="skill-tag">Android Studio(flutter Emulator)</span><span class="skill-tag">VS Code</span>
+        <span class="skill-tag">React.js</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="fade-in" style="max-width:1100px">
+  <div class="section-header">
+    <div class="section-tag">// 03. EXPERIENCE</div>
+    <h2 class="section-title">Work <span>Experience</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-card">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Flutter Developer Intern</div>
+        <div class="exp-company">Incubators Pvt Ltd — Core2Web Technologies, Pune</div>
+      </div>
+      <div class="exp-date">JAN 2026 → MAR 2026</div>
+    </div>
+    <ul class="exp-bullets">
+      <li>Built cross-platform mobile apps using Flutter & Dart with Firebase Auth, Firestore & SQLite for offline-first functionality.</li>
+      <li>Tested and debugged REST APIs using Postman; collaborated on live client projects under Agile/Scrum workflows.</li>
+      <li>Reduced app load time by 30% through SQLite caching strategy and optimized Firestore query batching.</li>
+    </ul>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1rem">
+      <span class="stack-tag">Flutter</span><span class="stack-tag">Firebase</span>
+      <span class="stack-tag">SQLite</span><span class="stack-tag">REST API</span>
+      <span class="stack-tag">Agile</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="fade-in" style="max-width:1100px">
+  <div class="section-header">
+    <div class="section-tag">// 04. PROJECTS</div>
+    <h2 class="section-title">Featured <span>Projects</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-rank">🏆 1ST PLACE — ₹15K</div>
+      <div class="project-icon">🏥</div>
+      <div class="project-name">CareNexus</div>
+      <div class="project-sub">Complete Healthcare Management System</div>
+      <div class="project-desc">Unified 5-role healthcare platform (Patient, Doctor, Pharmacy, Ambulance, Admin) with Gemini AI symptom checker, IoT vitals monitoring — BP, Pulse, Heart Rate, SOS emergency button & live chat.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Java</span><span class="stack-tag">JavaFX</span>
+        <span class="stack-tag">Firebase</span><span class="stack-tag">Gemini AI</span>
+        <span class="stack-tag">IoT</span><span class="stack-tag">Maven</span>
+      </div>
+      <div class="project-award">🏆 Super-X 2025 · Java Category · 250+ teams · ₹15,000 prize · Jun–Jul 2025</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-rank">🏅 SPECIAL AWARD</div>
+      <div class="project-icon">📚</div>
+      <div class="project-name">SkillsIgnite</div>
+      <div class="project-sub">Smart AI-Powered Learning Platform</div>
+      <div class="project-desc">3-role EdTech app with Gemini AI lecture summaries, smart question solver, automated MCQ grading, progress streaks & real-time analytics dashboard for students and teachers.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Flutter</span><span class="stack-tag">Dart</span>
+        <span class="stack-tag">Firebase</span><span class="stack-tag">Gemini AI</span>
+        <span class="stack-tag">SQLite</span><span class="stack-tag">Provider</span>
+      </div>
+      <div class="project-award">🏅 Special Recognition — Super-X 2025 · Best UI/UX & Workflow · Sep–Oct 2025</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-rank">🌿 AICTE + SHELL</div>
+      <div class="project-icon">♻️</div>
+      <div class="project-name">EcoMate</div>
+      <div class="project-sub">AI-Powered Waste Management App</div>
+      <div class="project-desc">Offline AI waste classifier using MobileNetV2 (92% accuracy, 10+ categories), GPS recycling locator, CO₂ impact tracker & gamification system — fully offline, no internet required.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Flutter</span><span class="stack-tag">TFLite</span>
+        <span class="stack-tag">MobileNetV2</span><span class="stack-tag">Keras</span>
+        <span class="stack-tag">Firebase</span><span class="stack-tag">Maps API</span>
+      </div>
+      <div class="project-award">📌 Edunet Foundation · AICTE & Shell Green Skills Program · Jan–Feb 2026</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs" class="fade-in" style="max-width:1100px">
+  <div class="section-header">
+    <div class="section-tag">// 05. CERTIFICATIONS</div>
+    <h2 class="section-title"><span>Certs</span> & Achievements</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-issuer">EDUNET · AICTE · SHELL</div>
+      <div class="cert-name">Green Skills & Artificial Intelligence</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">ADOBE · COURSERA</div>
+      <div class="cert-name">Generative AI Content Creation</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">NASSCOM FUTURESKILLS</div>
+      <div class="cert-name">Gen AI 101</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">CORE2WEB TECHNOLOGIES</div>
+      <div class="cert-name">Flutter Development Internship</div>
+    </div>
+  </div>
+
+  <!-- Achievements -->
+  <div style="margin-top:2rem;background:var(--dark-card);border:1px solid rgba(255,215,0,0.15);padding:2rem">
+    <div style="font-family:'Orbitron',sans-serif;font-size:0.8rem;color:#ffd700;letter-spacing:2px;margin-bottom:1.5rem">🏆 ACHIEVEMENTS</div>
+    <div style="display:grid;gap:1rem">
+      <div style="display:flex;align-items:flex-start;gap:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,215,0,0.08)">
+        <span style="color:#ffd700;font-size:1.2rem;flex-shrink:0">🥇</span>
+        <div>
+          <div style="color:var(--text-main);font-weight:600">1st Place — Super-X Competition (Java Category)</div>
+          <div style="color:var(--text-muted);font-size:0.85rem">Core2web Technologies, Narhe · 250+ teams · ₹15,000 prize · 2025</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,215,0,0.08)">
+        <span style="color:#ffd700;font-size:1.2rem;flex-shrink:0">🏅</span>
+        <div>
+          <div style="color:var(--text-main);font-weight:600">Special Recognition — Super-X Competition (Flutter Category)</div>
+          <div style="color:var(--text-muted);font-size:0.85rem">Best UI/UX & End-to-End Workflow · 2025</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <span style="color:var(--neon-cyan);font-size:1.2rem;flex-shrink:0">📈</span>
+        <div>
+          <div style="color:var(--text-main);font-weight:600">CGPA 9.14 — Top Academic Performer</div>
+          <div style="color:var(--text-muted);font-size:0.85rem">NBNSTIC, SPPU · BE Information Technology · Batch 2023–2027</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-in" style="max-width:1100px">
+  <div class="section-header">
+    <div class="section-tag">// 06. CONTACT</div>
+    <h2 class="section-title">Get In <span>Touch</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="color:var(--text-muted);margin-bottom:2rem;font-size:1rem;line-height:1.8">
+    I'm actively looking for Flutter / Java Backend internship opportunities. Whether you have a project, an offer, or just want to connect — my inbox is always open.
+  </p>
+  <div class="contact-grid">
+    <a href="mailto:pranavamale.nbnstic.it@gmail.com" class="contact-item">
+      <span class="contact-icon">📧</span>
+      <div class="contact-label">EMAIL</div>
+      <div class="contact-value">pranavamale.nbnstic.it<br>@gmail.com</div>
+    </a>
+    <a href="tel:+918767451007" class="contact-item">
+      <span class="contact-icon">📞</span>
+      <div class="contact-label">PHONE</div>
+      <div class="contact-value">+91 8767451007</div>
+    </a>
+    <a href="https://linkedin.com/in/pranav-amale-210b2b342" target="_blank" class="contact-item">
+      <span class="contact-icon">💼</span>
+      <div class="contact-label">LINKEDIN</div>
+      <div class="contact-value">pranav-amale-210b2b342</div>
+    </a>
+    <a href="https://github.com/Pranavamale1" target="_blank" class="contact-item">
+      <span class="contact-icon">🐙</span>
+      <div class="contact-label">GITHUB</div>
+      <div class="contact-value">Pranavamale1</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div style="margin-bottom:0.5rem;color:var(--neon-cyan);font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:3px">PRANAV AMALE · 2026</div>
+  Built with passion · Flutter Developer · Java Backend · AI Enthusiast · Pune, India
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX - 6 + 'px';
+  cursor.style.top = e.clientY - 6 + 'px';
+  ring.style.left = e.clientX - 18 + 'px';
+  ring.style.top = e.clientY - 18 + 'px';
+});
+document.querySelectorAll('a,button,.project-card,.skill-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform='scale(2)'; ring.style.transform='scale(1.5)'; ring.style.borderColor='var(--neon-purple)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform='scale(1)'; ring.style.transform='scale(1)'; ring.style.borderColor='var(--neon-cyan)'; });
+});
+
+// Particles
+const container = document.getElementById('particles');
+for(let i=0;i<40;i++){
+  const p = document.createElement('div');
+  p.className='particle';
+  p.style.cssText = `left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*8}s;opacity:0;background:${Math.random()>0.5?'var(--neon-cyan)':'var(--neon-purple)'}`;
+  container.appendChild(p);
+}
+
+// Scroll fade-in
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// Typing effect for hero tag
+const tag = document.querySelector('.hero-tag');
+const text = '// INITIALIZING PORTFOLIO v2.6.0';
+tag.textContent='';
+let i=0;
+const type = () => { if(i<text.length){ tag.textContent+=text[i++]; setTimeout(type,60); } };
+setTimeout(type, 500);
+</script>
+</body>
+</html>
