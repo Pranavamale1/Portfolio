@@ -69,18 +69,18 @@ h1 .g{background:var(--grad);background-size:200% 200%;-webkit-background-clip:t
 .btn:hover{transform:translateY(-3px)}
 .btn.s:hover{border-color:var(--c1);background:rgba(34,211,238,.08)}
 .socials{display:flex;gap:12px;margin-top:28px}
-.socials a{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card);transition:.3s;font-size:.8rem;font-weight:600;color:var(--muted)}
+.socials a{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card);transition:.3s;font-size:.8rem;font-weight:600;color:var(--text)}
 .socials a:hover{color:#fff;border-color:var(--c2);transform:translateY(-4px);box-shadow:0 8px 24px rgba(129,140,248,.3)}
 
 /* photo */
 .photo-wrap{position:relative;width:min(380px,80%);aspect-ratio:1;margin:auto}
-.photo-wrap::before{content:'';position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,var(--c1),var(--c2),var(--c3),var(--c1));animation:spin 8s linear infinite;filter:blur(2px)}
+.photo-wrap::before{content:'';position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,var(--c1),var(--c2),var(--c3),var(--c1));animation:spin 8s linear infinite;filter:blur(0)}
 .photo-wrap::after{content:'';position:absolute;inset:-34px;border-radius:50%;border:1px dashed rgba(129,140,248,.35);animation:spin 30s linear infinite reverse}
 @keyframes spin{to{transform:rotate(360deg)}}
 .photo{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:var(--bg2);z-index:2;display:grid;place-items:center;border:6px solid var(--bg)}
 .photo img{width:100%;height:100%;object-fit:cover}
-.photo .initials{position:absolute;font-family:'Space Grotesk',sans-serif;font-size:5rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;z-index:-1}
-.chip{position:absolute;z-index:3;padding:8px 14px;border-radius:12px;font-size:.78rem;font-weight:600;background:rgba(10,14,28,.85);backdrop-filter:blur(8px);border:1px solid var(--line);animation:bob 5s ease-in-out infinite}
+.photo .initials{position:absolute;font-family:'Space Grotesk',sans-serif;font-size:5rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.95}
+.chip{position:absolute;z-index:3;padding:8px 14px;border-radius:12px;font-size:.78rem;font-weight:600;background:rgba(10,14,28,.85);backdrop-filter:blur(8px);border:1px solid var(--line);animation:bob 4s ease-in-out infinite}
 .chip.a{top:6%;left:-10%}.chip.b{top:44%;right:-14%;animation-delay:-1.5s}.chip.c{bottom:4%;left:-4%;animation-delay:-3s}
 @keyframes bob{50%{transform:translateY(-12px)}}
 
@@ -163,7 +163,7 @@ ul.pts li::before{content:'▹';position:absolute;left:0;color:var(--c2)}
 .contact p{color:var(--muted);max-width:560px;margin:0 auto 28px}
 .cgrid{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
 footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
-#top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:rgba(10,14,28,.85);color:#fff;font-size:1.1rem;cursor:pointer;z-index:150;opacity:0;pointer-events:none;transition:.3s}
+#top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:rgba(10,14,28,.85);color:#fff;font-size:1.1rem;cursor:pointer;z-index:250;opacity:0;pointer-events:none;transition:.3s}
 #top.show{opacity:1;pointer-events:auto}#top:hover{background:var(--c2);transform:translateY(-4px)}
 
 /* reveal */
@@ -213,7 +213,6 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
     <p class="lead">Final-year B.E. IT student (CGPA 9.14) from Pune. I build full-stack apps with Java, Spring Boot, Python and React, and add Generative AI where it actually helps. 1st Rank among 250+ teams at Super-X 2025.</p>
     <div class="btns">
       <a href="#projects" class="btn p">View Projects &rarr;</a>
-      <!-- RESUME: put your resume PDF in the same folder and keep this name, or change the path -->
       <a href="Pranav_Amale_Resume.pdf" class="btn s" download>Download Resume</a>
       <a href="#contact" class="btn s">Contact Me</a>
     </div>
@@ -228,12 +227,7 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
   <div class="photo-wrap">
     <div class="photo">
       <span class="initials">PA</span>
-      <!-- ============================================================
-           YOUR PHOTO: change the path in src below.
-           Example: src="images/pranav.jpg"  (put the image inside an "images" folder next to this file)
-           If the image is missing, the "PA" initials show automatically.
-           ============================================================ -->
-      <img src="images/pranav.jpg" alt="Pranav Amale" onerror="this.style.display='none'">
+      <img src="images/pranav.png" alt="Pranav Amale" onerror="this.style.display='none'">
     </div>
     <span class="chip a">Java &middot; Spring Boot</span>
     <span class="chip b">Python &middot; FastAPI</span>
@@ -256,8 +250,8 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
   <div class="about rv">
     <div>
       <p>I am a final-year Information Technology student at <strong>NBN Sinhgad Technical Institute Campus, Pune</strong> (SPPU), graduating in 2027 with a <strong>CGPA of 9.14</strong>.</p>
-      <p>I like building complete products, from the database and REST APIs to the screen the user sees. My team's healthcare platform <strong>CareNexus</strong> won <strong>1st Rank among 250+ teams</strong> at Super-X 2025, and my <strong>DocuMind</strong> RAG assistant is live on the internet with login, per-user documents and saved chats.</p>
-      <p>I also did a <strong>Flutter UI internship</strong> at Incubators Pvt. Ltd., and I use AI tools like ChatGPT, Claude, Cursor and GitHub Copilot to work faster, while still understanding every line I ship.</p>
+      <p>I like building complete products, from the database and REST APIs to the screen the user sees. My team's healthcare platform <strong>CareNexus</strong> won <strong>1st Rank among 250+ teams</strong> at Super-X 2025.</p>
+      <p>I also did a <strong>Flutter UI internship</strong> at Incubators Pvt. Ltd., and I use AI tools like ChatGPT, Claude, Cursor and GitHub Copilot to work faster, while still understanding the fundamentals.</p>
     </div>
     <div class="glass">
       <ul class="info">
@@ -279,9 +273,9 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
     <div class="glass"><h3>Languages</h3><div class="tags"><span>Java</span><span>Python</span><span>JavaScript</span><span>SQL</span><span>Dart</span></div></div>
     <div class="glass"><h3>Backend</h3><div class="tags"><span>Spring Boot</span><span>FastAPI</span><span>REST APIs</span><span>JPA / Hibernate</span><span>SQLAlchemy</span><span>JDBC</span></div></div>
     <div class="glass"><h3>Frontend and Mobile</h3><div class="tags"><span>React.js</span><span>HTML5</span><span>CSS3</span><span>JavaFX</span><span>Flutter</span><span>Vite</span></div></div>
-    <div class="glass"><h3>Generative AI and ML</h3><div class="tags"><span>RAG</span><span>Gemini API</span><span>Prompt Engineering</span><span>Embeddings</span><span>pgvector</span><span>TensorFlow Lite</span><span>MobileNetV2</span></div></div>
+    <div class="glass"><h3>Generative AI and ML</h3><div class="tags"><span>RAG</span><span>Gemini API</span><span>Prompt Engineering</span><span>Embeddings</span><span>pgvector</span><span>TensorFlow</span></div></div>
     <div class="glass"><h3>Databases</h3><div class="tags"><span>PostgreSQL</span><span>MySQL</span><span>SQLite</span><span>Firebase Firestore</span></div></div>
-    <div class="glass"><h3>Tools and DevOps</h3><div class="tags"><span>Git</span><span>GitHub</span><span>Docker</span><span>GitHub Actions</span><span>Maven</span><span>Postman</span><span>Vercel</span><span>Render</span></div></div>
+    <div class="glass"><h3>Tools and DevOps</h3><div class="tags"><span>Git</span><span>GitHub</span><span>Docker</span><span>GitHub Actions</span><span>Maven</span><span>Postman</span></div></div>
     <div class="glass"><h3>Core Concepts</h3><div class="tags"><span>OOP</span><span>Data Structures and Algorithms</span><span>DBMS</span><span>Operating Systems</span><span>SDLC</span></div></div>
     <div class="glass"><h3>AI Tools</h3><div class="tags"><span>ChatGPT</span><span>Claude</span><span>Cursor</span><span>GitHub Copilot</span><span>Gemini</span><span>Antigravity</span></div></div>
   </div>
@@ -307,12 +301,9 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
 </section>
 
 <!-- ================= PROJECTS ================= -->
-<!-- ORDER: CareNexus, DocuMind, SkillsIgnite, EcoMate, ShopSphere -->
 <section id="projects">
   <div class="rv"><div class="tag">04 / projects</div><h2 class="title">Things I <em>built</em></h2></div>
   <div class="projects">
-
-    <!-- 1. CareNexus -->
     <article class="proj feat rv">
       <span class="num">01</span>
       <div><span class="badge">1st Rank - Super-X 2025</span><span class="badge b2">250+ teams</span></div>
@@ -332,7 +323,6 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
       </div>
     </article>
 
-    <!-- 2. DocuMind -->
     <article class="proj rv">
       <span class="num">02</span>
       <div><span class="badge b2">Live on the web</span></div>
@@ -340,7 +330,7 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
       <div class="sub">AI document assistant using RAG</div>
       <ul class="pts">
         <li>Upload PDFs and ask questions; relevant chunks are found with pgvector semantic search before Gemini answers.</li>
-        <li>FastAPI backend with JWT login (HttpOnly cookie), document upload, search, and saved chats per user.</li>
+        <li>FastAPI backend with JWT login, document upload, search, and saved chats per user.</li>
         <li>React dashboard on Vercel, API on Render, PostgreSQL on Neon; Docker images built by GitHub Actions.</li>
       </ul>
       <div class="stack"><span>Python</span><span>FastAPI</span><span>React</span><span>PostgreSQL</span><span>pgvector</span><span>Gemini API</span><span>Docker</span></div>
@@ -350,25 +340,20 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
       </div>
     </article>
 
-    <!-- 3. SkillsIgnite -->
     <article class="proj rv">
       <span class="num">03</span>
-      <!-- Keep this badge text SAME as your CV (CV says 4th Rank at Super-X 2025). Edit if needed. -->
       <div><span class="badge b3">Super-X 2025</span></div>
       <h3>SkillsIgnite</h3>
       <div class="sub">AI-powered employability and learning platform</div>
       <ul class="pts">
         <li>Built as an AI-powered platform to help students become job-ready.</li>
-        <!-- ADD 2 more REAL bullets here about the features YOU built -->
       </ul>
       <div class="stack"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Gemini API</span></div>
       <div class="plinks">
-        <!-- Add your GitHub or demo link in href -->
         <a href="#" target="_blank" rel="noopener">GitHub</a>
       </div>
     </article>
 
-    <!-- 4. EcoMate -->
     <article class="proj rv">
       <span class="num">04</span>
       <div><span class="badge b3">AICTE and Shell Edunet</span></div>
@@ -381,28 +366,25 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
       </ul>
       <div class="stack"><span>Python</span><span>TensorFlow Lite</span><span>MobileNetV2</span><span>Flutter</span><span>Firebase</span></div>
       <div class="plinks">
-        <!-- Add your GitHub link in href -->
         <a href="#" target="_blank" rel="noopener">GitHub</a>
       </div>
     </article>
 
-    <!-- 5. ShopSphere -->
     <article class="proj rv">
       <span class="num">05</span>
       <div><span class="badge b3">Full-stack</span></div>
       <h3>ShopSphere</h3>
       <div class="sub">Full-stack e-commerce platform</div>
       <ul class="pts">
-        <li>Spring Boot REST APIs for product CRUD, image upload (MultipartFile) and keyword search across name, brand, description and category.</li>
+        <li>Spring Boot REST APIs for product CRUD and keyword search across name, brand, description and category.</li>
         <li>Orders modeled with JPA relationships and DTOs; stock deduction and order totals handled in the service layer.</li>
-        <li>React shopping cart with Context API and localStorage, connected to the backend through Axios.</li>
+        <li>React shopping cart with Context API and localStorage, connected to backend through Axios.</li>
       </ul>
       <div class="stack"><span>Java</span><span>Spring Boot</span><span>React</span><span>PostgreSQL</span><span>JPA / Hibernate</span><span>REST APIs</span></div>
       <div class="plinks">
         <a class="live" href="https://github.com/Pranavamale1/ShopSphere" target="_blank" rel="noopener">GitHub</a>
       </div>
     </article>
-
   </div>
 </section>
 
@@ -410,12 +392,11 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
 <section id="achievements">
   <div class="rv"><div class="tag">05 / achievements</div><h2 class="title">Awards and <em>certifications</em></h2></div>
   <div class="ach rv">
-    <div class="glass"><div class="ic">&#129351;</div><h4>1st Rank - Super-X 2025</h4><p>CareNexus won among 250+ teams.</p></div>
-    <!-- Keep same wording as your CV -->
-    <div class="glass"><div class="ic">&#127941;</div><h4>4th Rank - Super-X 2025</h4><p>SkillsIgnite, AI-powered employability platform.</p></div>
-    <div class="glass"><div class="ic">&#127891;</div><h4>AI and Green Skills (2026)</h4><p>AICTE and Shell Edunet Foundation certification.</p></div>
-    <div class="glass"><div class="ic">&#10024;</div><h4>Generative AI Content Creation</h4><p>Adobe, via Coursera.</p></div>
-    <div class="glass"><div class="ic">&#128200;</div><h4>CGPA 9.14 / 10</h4><p>B.E. Information Technology, SPPU.</p></div>
+    <div class="glass"><div class="ic">🏅</div><h4>1st Rank - Super-X 2025</h4><p>CareNexus won among 250+ teams.</p></div>
+    <div class="glass"><div class="ic">🏆</div><h4>4th Rank - Super-X 2025</h4><p>SkillsIgnite, AI-powered employability platform.</p></div>
+    <div class="glass"><div class="ic">🎓</div><h4>AI and Green Skills (2026)</h4><p>AICTE and Shell Edunet Foundation certification.</p></div>
+    <div class="glass"><div class="ic">✨</div><h4>Generative AI Content Creation</h4><p>Adobe, via Coursera.</p></div>
+    <div class="glass"><div class="ic">📊</div><h4>CGPA 9.14 / 10</h4><p>B.E. Information Technology, SPPU.</p></div>
   </div>
 </section>
 
@@ -439,7 +420,6 @@ footer{text-align:center;padding:30px 6%;color:var(--muted);font-size:.82rem;bor
 <button id="top" aria-label="Back to top">&uarr;</button>
 
 <script>
-/* typing roles */
 const roles=["Java Full Stack Developer","Python and FastAPI Developer","Generative AI App Builder","Flutter UI Developer"];
 const roleEl=document.getElementById('role');let ri=0,ci=0,del=false;
 (function type(){
@@ -451,11 +431,9 @@ const roleEl=document.getElementById('role');let ri=0,ci=0,del=false;
   else{del=false;ri=(ri+1)%roles.length;setTimeout(type,300)}
 })();
 
-/* skills marquee */
 const items=["Java","Spring Boot","Python","FastAPI","React","PostgreSQL","Flutter","Firebase","Docker","RAG","Gemini API","TensorFlow Lite","GitHub Actions","SQL"];
 document.getElementById('track').innerHTML=[...items,...items].map(t=>`<span>&#9670; ${t}</span>`).join('');
 
-/* scroll reveal + counters */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(!e.isIntersecting)return;
   e.target.classList.add('in');
@@ -472,7 +450,6 @@ function count(el){
   })(t0);
 }
 
-/* nav: progress, active link, back-to-top */
 const prog=document.getElementById('progress'),topBtn=document.getElementById('top');
 const secs=[...document.querySelectorAll('main section[id]')],navA=[...document.querySelectorAll('.links a')];
 addEventListener('scroll',()=>{
@@ -487,7 +464,6 @@ const links=document.getElementById('links');
 document.getElementById('burger').onclick=()=>links.classList.toggle('open');
 navA.forEach(a=>a.onclick=()=>links.classList.remove('open'));
 
-/* cursor glow + card spotlight + 3D tilt */
 const glow=document.getElementById('glow');
 addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
 document.querySelectorAll('.proj').forEach(c=>{
@@ -500,7 +476,6 @@ document.querySelectorAll('.proj').forEach(c=>{
   c.addEventListener('mouseleave',()=>c.style.transform='');
 });
 
-/* particle network background */
 const cv=document.getElementById('net'),cx=cv.getContext('2d');let W,H,pts=[];
 function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;
   pts=Array.from({length:Math.min(70,Math.floor(W/18))},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35}))}
